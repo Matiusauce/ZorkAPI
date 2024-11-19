@@ -16,6 +16,7 @@ import platform
 
 USER_PROFILES_FILE = './profiles.pickle'
 profiles_TYPE = 'filesystem'
+FROTZDIR = '/opt/homebrew/opt/frotz/bin/dfrotz'
 # ROOT_PATH = '/home/J3lanzone/LinuxSaves' if (platform.system() == "Linux") else "C:\\Users\\J3lan\\OneDrive\\Documents\\Code\\ZorkAPI\\WindowsSaves"
 
 # Connect to Redis 
@@ -102,20 +103,20 @@ def getFirstLines(game):
 def startGame(title):
     print(f"\n\n\nSPAWN GAME CALLED\n {title}\n\n\n")
     if (title == 'hike'):
-        game = pexpect.spawn('/home/J3lanzone/frotz/dfrotz -mp /home/J3lanzone/Games/HitchHikers/hhgg.z3')
+        game = pexpect.spawn(FROTZDIR + ' -mp Games/HitchHikers/hhgg.z3')
     elif (title == 'spell'):
-        game = pexpect.spawn('/home/J3lanzone/frotz/dfrotz -mp /home/J3lanzone/Games/Spellbreaker/spellbre.dat')
+        game = pexpect.spawn(FROTZDIR + ' -mp Games/Spellbreaker/spellbre.dat')
     elif (title == 'wish'):
-        game = pexpect.spawn('/home/J3lanzone/frotz/dfrotz -mp /home/J3lanzone/Games/Wishbringer/wishbrin.dat')
+        game = pexpect.spawn(FROTZDIR + ' -mp Games/Wishbringer/wishbrin.dat')
     elif (title == 'zork1'):
-        game = pexpect.spawn('/home/J3lanzone/frotz/dfrotz -mp /home/J3lanzone/Games/Zork1/zork1.z5')
+        game = pexpect.spawn(FROTZDIR + ' -mp Games/Zork1/zork1.z5')
     elif (title == 'zork2'):
-        game = pexpect.spawn('/home/J3lanzone/frotz/dfrotz -mp /home/J3lanzone/Games/Zork2/zork2.dat')
+        game = pexpect.spawn(FROTZDIR + ' -mp Games/Zork2/zork2.dat')
     elif (title == 'zork3'):
-        game = pexpect.spawn('/home/J3lanzone/frotz/dfrotz -mp /home/J3lanzone/Games/Zork3/ZORK3.DAT')
+        game = pexpect.spawn(FROTZDIR + ' -mp Games/Zork3/ZORK3.DAT')
     else:
         print("miss")
-        game = pexpect.spawn('/home/J3lanzone/frotz/dfrotz -mp /home/J3lanzone/Games/Zork1/zork1.z5')
+        game = pexpect.spawn(FROTZDIR + ' -mp Games/Zork1/zork1.z5')
         title = 'zork1'
 
     return (game, title)
@@ -248,7 +249,9 @@ def action():
     dumpProfiles(profiles, email, title, game)
     game.terminate()
     # return whatever the game has given you
-    return(jsonify(resObj))
+    print(output.replace(action,'').strip())
+    # return(jsonify(resObj))
+    return(output.replace(action,'').strip())
 
 
 
